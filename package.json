@@ -1,0 +1,26 @@
+{
+  "name": "Employee-Database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GarrettLB/Employee-Database.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GarrettLB/Employee-Database/issues"
+  },
+  "homepage": "https://github.com/GarrettLB/Employee-Database#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "express": "^4.17.1",
+    "inquirer": "^8.2.0",
+    "mysql2": "^2.3.3-rc.0"
+  }
+}
