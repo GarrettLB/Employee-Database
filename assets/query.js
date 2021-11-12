@@ -21,12 +21,21 @@ function runQuery(query) {
       break;
     
     case "var":
-      db.query('SELECT role.id, title, salary, department_name AS "department" FROM role JOIN department ON role.department_id = department.id', function (err, results) {
+      db.query(`SELECT role.id, title, salary, department_name AS "department" 
+                FROM role JOIN department ON role.department_id = department.id`,
+       function (err, results) {
         console.table(results);
       });
       break;
 
     case "vae":
+      db.query(`SELECT employee.id, first_name AS "first name", last_name AS "last name", 
+                title, salary, department_name AS "department", manager_id AS "manager id" FROM employee
+                JOIN role ON employee.role_id = role.id 
+                JOIN department ON role.department_id = department.id`, 
+        function (err, results) {
+          console.table(results);
+      });
       break;
 
     case "aad":

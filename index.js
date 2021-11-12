@@ -24,23 +24,23 @@ inq
             runQuery("var")
             break;
 
-        case "vae":
+        case "view all employees":
             runQuery("vae")
             break;
 
-        case "aad":
+        case "add a department":
             runQuery("aad")
             break;
 
-        case "aar":
+        case "add a role":
             runQuery("aar")
             break;
 
-        case "aae":
+        case "add an employee":
             runQuery("aae")
             break;
 
-        case "uaer":
+        case "update an employee role":
             runQuery("uaer")
             break;
     }
