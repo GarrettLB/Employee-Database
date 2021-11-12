@@ -14,7 +14,34 @@ inq
     }
   )
   .then((response) => {
-    if (response.menu === "view all departments") {
-      runQuery("vad")
+
+    switch(response.menu) {
+        case "view all departments":
+            runQuery("vad")
+            break;
+        
+        case "view all roles":
+            runQuery("var")
+            break;
+
+        case "vae":
+            runQuery("vae")
+            break;
+
+        case "aad":
+            runQuery("aad")
+            break;
+
+        case "aar":
+            runQuery("aar")
+            break;
+
+        case "aae":
+            runQuery("aae")
+            break;
+
+        case "uaer":
+            runQuery("uaer")
+            break;
     }
   })
