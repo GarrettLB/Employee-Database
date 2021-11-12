@@ -1,6 +1,7 @@
 const cTable = require("console.table")
 const inq = require("inquirer")
 const mysql = require("mysql2")
+const runQuery = require("./assets/query")
 const query = require("./assets/query")
 
 inq
@@ -13,7 +14,7 @@ inq
     }
   )
   .then((response) => {
-      if (response.menu === "view all departments") {
-        
-      }
+    if (response.menu === "view all departments") {
+      runQuery("vad")
+    }
   })
