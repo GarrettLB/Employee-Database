@@ -10,12 +10,13 @@ inq
       type: 'list',
       message: 'What would you like to do?',
       name: 'menu',
-      choices: ["view all departments", "view all roles", "view all employees", "add a department", "add a role", "add an employee", "update an employee role"]
+      choices: ["view all departments", "view all roles", "view all employees", "add a department", 
+                "add a role", "add an employee", "update an employee role"]
     }
   )
-  .then((response) => {
+  .then((res) => {
 
-    switch(response.menu) {
+    switch(res.menu) {
         case "view all departments":
             runQuery("vad")
             break;
@@ -42,7 +43,28 @@ inq
             break;
 
         case "add a role":
-            runQuery("aar")
+          inq
+            .prompt([
+              {
+              type: 'input',
+              message: 'Enter role title.',
+              name: 'title'
+              },
+              {
+                type: 'input',
+                message: 'Enter role salary.',
+                name: 'salary'
+              },
+              {
+                type: 'input',
+                message: 'Enter department id. (references department table)',
+                name: 'id'
+              }
+            ])
+            .then(res => {
+              let value = [res.title, res.salary, res.id]
+              runQuery("aar",value)
+            })
             break;
 
         case "add an employee":

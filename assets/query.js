@@ -49,6 +49,17 @@ function runQuery(query,values) {
       break;
 
     case "aar":
+      let title = values[0]
+      let salary = values[1]
+      let id = values[2]
+
+      db.query(`INSERT INTO role (title, salary, department_id)
+                VALUES (?,?,?)`, [title, salary, id], function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+      runQuery("var")
       break;
 
     case "aae":
