@@ -29,7 +29,7 @@ function runQuery(query,values) {
       break;
 
     case "vae":
-      db.query(`SELECT emp.id, emp.first_name, emp.last_name, title, salary, department_name, emp2.id AS "manager_id", 
+      db.query(`SELECT emp.id, emp.first_name, emp.last_name, title, salary, department_name, 
                 CONCAT(emp2.first_name, ' ', emp2.last_name) AS "manager_name" FROM employee AS emp
                 JOIN role ON emp.role_id = role.id
                 JOIN department ON role.department_id = department.id 
@@ -98,23 +98,91 @@ function runQuery(query,values) {
       break;
 
     case "aae":
-      let fname = values[0]
-      let lname = values[1]
-      let roleid = values[2]
+      db.query('SELECT title FROM role', function (err, results) {
+        let roles = []
 
-      if (values[3] == ''){
-        var managerid = null
-      } else {
-        var managerid = values[3]
-      }
-      
-      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
-                VALUES (?,?,?,?)`, [fname, lname, roleid, managerid], function (err) {
-        if (err) {
-          console.log(err);
+        for (let i of results) {
+          roles.push(i.title)
         }
-      });
-      runQuery("vae")      
+
+        db.query("SELECT CONCAT(first_name, ' ', last_name) AS 'manager_name' FROM employee", function (err, results) {
+          let employees = []
+  
+          for (let i of results) {
+            employees.push(i.manager_name)
+          }
+          employees.push("none")
+
+          inq
+            .prompt([
+            {
+              type: 'input',
+              message: "Enter employee's first name.",
+              name: 'fname'
+            },
+            {
+              type: 'input',
+              message: "Enter employee's last name.",
+              name: 'lname'
+            },
+            {
+              type: 'list',
+              message: "Choose employee's role.",
+              name: 'role',
+              choices: roles
+            },
+            {
+              type: 'list',
+              message: "Choose employee's manager.",
+              name: 'manager',
+              choices: employees
+            }
+            ])
+            .then(res => {
+              const {fname, lname, role, manager} = res
+
+              db.query(`SELECT id FROM role WHERE title = ?`, role, function (err, res) {
+                if (err) {
+                  console.log(err);
+                }
+  
+                let roleId = res[0].id
+                
+                if (manager === "none"){
+                  var managerId = null
+                  
+                  db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                            VALUES (?,?,?,?)`, [fname, lname, roleId, managerId], function (err) {
+                    if (err) {
+                      console.log(err);
+                    }
+
+                    runQuery("vae")
+                  })
+                } else {
+                  let split = manager.split(" ")
+
+                  db.query(`SELECT id FROM employee WHERE first_name = ? AND last_name = ?`, [split[0], split[1]], function (err, res) {
+                    if (err) {
+                      console.log(err);
+                    }
+      
+                    let managerId = res[0].id
+                    
+                    db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                              VALUES (?,?,?,?)`, [fname, lname, roleId, managerId], function (err) {
+                      if (err) {
+                        console.log(err);
+                      }
+
+                      runQuery("vae")
+                    })
+                  })
+                }
+              })
+            })
+          })
+        })     
       break;
 
     case "uaer":
