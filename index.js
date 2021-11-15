@@ -43,29 +43,8 @@ inq
             break;
 
         case "add a role":
-          inq
-            .prompt([
-              {
-              type: 'input',
-              message: 'Enter role title.',
-              name: 'title'
-              },
-              {
-                type: 'input',
-                message: 'Enter role salary.',
-                name: 'salary'
-              },
-              {
-                type: 'input',
-                message: 'Enter department id. (references department table)',
-                name: 'id'
-              }
-            ])
-            .then(res => {
-              let value = [res.title, res.salary, res.id]
-              runQuery("aar",value)
-            })
-            break;
+          runQuery("aar")
+          break;
 
         case "add an employee":
           inq

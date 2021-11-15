@@ -1,5 +1,7 @@
 const mysql = require("mysql2")
-const cTable = require("console.table")
+const cTable = require("console.table");
+const { json } = require("express");
+const inq = require("inquirer")
 
 const db = mysql.createConnection(
   {
@@ -7,8 +9,7 @@ const db = mysql.createConnection(
     user: 'root',
     password: 'password123',
     database: 'employees_db'
-  },
-  console.log(`Connected to employees_db.`)
+  }
 );
 
 function runQuery(query,values) {
@@ -48,17 +49,52 @@ function runQuery(query,values) {
       break;
 
     case "aar":
-      let title = values[0]
-      let salary = values[1]
-      let id = values[2]
+      db.query('SELECT department_name FROM department', function (err, results) {
+        let departments = []
 
-      db.query(`INSERT INTO role (title, salary, department_id)
-                VALUES (?,?,?)`, [title, salary, id], function (err) {
-        if (err) {
-          console.log(err);
+        for (let i of results) {
+          departments.push(i.department_name)
         }
+
+        inq
+          .prompt([
+            {
+              type: 'input',
+              message: 'Enter role title.',
+              name: 'title'
+            },
+            {
+              type: 'input',
+              message: 'Enter role salary.',
+              name: 'salary'
+            },
+            {
+              type: 'list',
+              message: 'Choose department.',
+              name: "department",
+              choices: departments
+            }
+          ])
+          .then(res => {
+            const {title, salary, department} = res
+ 
+            db.query(`SELECT id FROM department WHERE department_name = ?`, department, function (err, res) {
+              if (err) {
+                console.log(err);
+              }
+
+              let dptId = res[0].id
+        
+              db.query(`INSERT INTO role (title, salary, department_id)
+                        VALUES (?,?,?)`, [title, salary, dptId], function (err) {
+                if (err) {
+                  console.log(err);
+                }
+                runQuery("var")
+              });
+            });
+          })
       });
-      runQuery("var")
       break;
 
     case "aae":
