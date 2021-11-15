@@ -4,7 +4,8 @@ const mysql = require("mysql2")
 const runQuery = require("./assets/query")
 const query = require("./assets/query")
 
-inq
+function menu(){
+  inq
   .prompt(
     {
       type: 'list',
@@ -17,41 +18,45 @@ inq
   .then((res) => {
 
     switch(res.menu) {
-        case "view all departments":
-            runQuery("vad")
-            break;
+      case "view all departments":
+        runQuery("vad")
+        break;
         
-        case "view all roles":
-            runQuery("var")
-            break;
+      case "view all roles":
+        runQuery("var")
+        break;
 
-        case "view all employees":
-            runQuery("vae")
-            break;
+      case "view all employees":
+        runQuery("vae")
+        break;
 
-        case "add a department":
-            inq
-            .prompt({
-              type: 'input',
-              message: 'Enter department name.',
-              name: 'department'
-            })
-            .then(res => {
-              let value = res.department
-              runQuery("aad",value)
-            })
-            break;
+      case "add a department":
+        inq
+        .prompt(
+          {
+            type: 'input',
+            message: 'Enter department name.',
+            name: 'department'
+          })
+          .then(res => {
+            let value = res.department
+            runQuery("aad",value)
+          })
+        break;
 
-        case "add a role":
-          runQuery("aar")
-          break;
+      case "add a role":
+        runQuery("aar")
+        break;
 
-        case "add an employee":
-          runQuery("aae")
-          break;
+      case "add an employee":
+        runQuery("aae")
+        break;
 
-        case "update an employee role":
-            runQuery("uaer")
-            break;
+      case "update an employee role":
+        runQuery("uaer")
+        break;
     }
   })
+}
+
+menu()
