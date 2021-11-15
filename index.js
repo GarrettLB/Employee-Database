@@ -68,7 +68,33 @@ inq
             break;
 
         case "add an employee":
-            runQuery("aae")
+          inq
+            .prompt([
+              {
+              type: 'input',
+              message: "Enter employee's first name.",
+              name: 'fname'
+              },
+              {
+                type: 'input',
+                message: "Enter employee's last name.",
+                name: 'lname'
+              },
+              {
+                type: 'input',
+                message: "Enter employee's role id. (references role table)",
+                name: 'roleid'
+              },
+              {
+                type: 'input',
+                message: "Enter employee's manager's id. (leave blank if no manager)",
+                name: 'managerid'
+              }
+            ])
+            .then(res => {
+              let value = [res.fname, res.lname, res.roleid,res.managerid]
+              runQuery("aae",value)
+            })
             break;
 
         case "update an employee role":

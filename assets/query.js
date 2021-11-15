@@ -12,7 +12,6 @@ const db = mysql.createConnection(
 );
 
 function runQuery(query,values) {
-
   switch(query) {
     case "vad":
       db.query('SELECT * FROM department', function (err, results) {
@@ -63,6 +62,23 @@ function runQuery(query,values) {
       break;
 
     case "aae":
+      let fname = values[0]
+      let lname = values[1]
+      let roleid = values[2]
+
+      if (values[3] == ''){
+        var managerid = null
+      } else {
+        var managerid = values[3]
+      }
+      
+      db.query(`INSERT INTO employee (first_name, last_name, role_id, manager_id)
+                VALUES (?,?,?,?)`, [fname, lname, roleid, managerid], function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+      runQuery("vae")      
       break;
 
     case "uaer":
