@@ -11,7 +11,7 @@ const db = mysql.createConnection(
   console.log(`Connected to employees_db.`)
 );
 
-function runQuery(query) {
+function runQuery(query,values) {
 
   switch(query) {
     case "vad":
@@ -39,6 +39,12 @@ function runQuery(query) {
       break;
 
     case "aad":
+      db.query(`INSERT INTO department(department_name) VALUES (?)`, values, function (err) {
+        if (err) {
+          console.log(err);
+        }
+      });
+      runQuery("vad")
       break;
 
     case "aar":

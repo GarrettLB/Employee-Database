@@ -29,7 +29,16 @@ inq
             break;
 
         case "add a department":
-            runQuery("aad")
+            inq
+            .prompt({
+              type: 'input',
+              message: 'Enter department name.',
+              name: 'department'
+            })
+            .then(res => {
+              let value = res.department
+              runQuery("aad",value)
+            })
             break;
 
         case "add a role":
