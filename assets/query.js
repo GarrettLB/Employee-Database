@@ -21,7 +21,7 @@ function runQuery(query,values) {
       break;
     
     case "var":
-      db.query(`SELECT role.id, title, salary, department_name AS "department" 
+      db.query(`SELECT role.id, title, salary, department_name 
                 FROM role JOIN department ON role.department_id = department.id`,
        function (err, results) {
         console.table(results);
@@ -29,10 +29,11 @@ function runQuery(query,values) {
       break;
 
     case "vae":
-      db.query(`SELECT employee.id, first_name AS "first name", last_name AS "last name", 
-                title, salary, department_name AS "department", manager_id AS "manager id" FROM employee
-                JOIN role ON employee.role_id = role.id 
-                JOIN department ON role.department_id = department.id`, 
+      db.query(`SELECT emp.id, emp.first_name, emp.last_name, title, salary, department_name, emp2.id AS "manager_id", 
+                CONCAT(emp2.first_name, ' ', emp2.last_name) AS "manager_name" FROM employee AS emp
+                JOIN role ON emp.role_id = role.id
+                JOIN department ON role.department_id = department.id 
+                LEFT JOIN employee AS emp2 ON emp.manager_id = emp2.id;`, 
         function (err, results) {
           console.table(results);
       });
