@@ -12,14 +12,14 @@ function menu(){
       message: 'What would you like to do?',
       name: 'menu',
       choices: ["view all departments", "view all roles", "view all employees", "add a department", 
-                "add a role", "add an employee", "update an employee role"]
+                "add a role", "add an employee", "update an employee role", "close"]
     }
   )
   .then((res) => {
-
     switch(res.menu) {
       case "view all departments":
         runQuery("vad")
+        console.log('\n')
         break;
         
       case "view all roles":
@@ -55,6 +55,10 @@ function menu(){
       case "update an employee role":
         runQuery("uaer")
         break;
+      
+      case "close":
+        console.log('program closed')
+        break
     }
   })
 }

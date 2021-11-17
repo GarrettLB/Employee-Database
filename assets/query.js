@@ -2,6 +2,7 @@ const mysql = require("mysql2")
 const cTable = require("console.table");
 const { json } = require("express");
 const inq = require("inquirer")
+const menu = require('../index')
 
 const db = mysql.createConnection(
   {
@@ -18,6 +19,7 @@ function runQuery(query,values) {
       db.query('SELECT * FROM department', function (err, results) {
         console.table(results);
       });
+      db.destroy()
       break;
     
     case "var":
@@ -26,6 +28,7 @@ function runQuery(query,values) {
        function (err, results) {
         console.table(results);
       });
+      db.destroy()
       break;
 
     case "vae":
@@ -37,6 +40,7 @@ function runQuery(query,values) {
         function (err, results) {
           console.table(results);
       });
+      db.destroy()
       break;
 
     case "aad":
@@ -45,6 +49,7 @@ function runQuery(query,values) {
           console.log(err);
         }
       });
+      db.destroy()
       runQuery("vad")
       break;
 
@@ -95,6 +100,7 @@ function runQuery(query,values) {
             });
           })
       });
+      db.destroy()
       break;
 
     case "aae":
@@ -182,7 +188,8 @@ function runQuery(query,values) {
               })
             })
           })
-        })     
+        }) 
+      db.destroy()    
       break;
 
     case "uaer":
