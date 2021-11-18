@@ -1,6 +1,7 @@
 const cTable = require("console.table")
 const inq = require("inquirer")
 const mysql = require("mysql2")
+const dotenv = require('dotenv').config()
 
 const db = mysql.createConnection(
   {
@@ -49,11 +50,11 @@ function runMenu(){
         break;
 
       case "update an employee role":
-        runQuery("uaer")
+        uaer()
         break;
       
       case "close":
-        console.log('program closed')
+        console.log('Goodbye.')
         process.exit()
         break
     }
@@ -245,6 +246,63 @@ function aae() {
           })
         })
     })
+  })
+}
+
+function uaer() {
+  db.query(`SELECT CONCAT(first_name, ' ', last_name) AS "employees" FROM employee`, function (err, results) {
+    let employees = []
+
+    for (let i of results) {
+      employees.push(i.employees)
+    }
+
+    inq
+      .prompt([
+        {
+          type: 'list',
+          message: 'Which employee would you like to update.',
+          name: "employee",
+          choices: employees
+        }
+      ]).then(res => {
+        split = res.employee.split(" ")
+
+        db.query(`SELECT id FROM employee WHERE 
+                  employee.first_name =? AND employee.last_name =?`, [split[0], split[1]], 
+          
+          function (err, results) {
+            let empId = results[0].id
+            
+            db.query(`SELECT title FROM role`, function (err, results) {
+              let roles = []
+
+              for (let i of results) {
+                roles.push(i.title)
+              }
+
+              inq
+                .prompt([
+                  {
+                    type: 'list',
+                    message: 'What new role would you like your employee to have?',
+                    name: "role",
+                    choices: roles
+                  }
+                ])
+                .then(res => {
+                  db.query(`SELECT id FROM role WHERE role.title = ?`, res.role, function (err, results) {
+                    let roleId = results[0].id
+                    
+                    db.query(`UPDATE employee SET role_id = ? WHERE employee.id = ?`, [roleId, empId], function (err, results) {
+                      console.log("Employee role updated.")
+                      runMenu()
+                    })
+                  })
+                })
+            })
+        })
+      })
   })
 }
 
