@@ -1,25 +1,25 @@
 # Employee-Database
 
-## Description
+# Description
 Employee Database provides a simple easy solution to anyone in need of a way to keep track of their employees' information, 
 such as salary, department, and who they work under.
 
-# Key Features
+## Key Features
 * Allows the ability to add new departments, roles, and employees. 
 * All departments, roles, and employees can be viewed seperately by tables. 
 * Allows the role of an employee to be updated after it has been created.
 * Utelizes a command line interface that offers an easy way to navigate through the programs many options.
 
-## Technologies
+# Technologies
 * Node.js
 
-# Npm packages used:
+## Npm packages used:
 * console.table
 * inquirer
 * dotenv
 * mysql2
 
-## Installation and Use
+# Installation and Use
 * Download source code.
 * Run "npm install" in the terminal.
 * Login to mysql and run "source db/schema.sql". If you want to use the seeds I provided for testing purposes, run "source db/seeds.sql".
