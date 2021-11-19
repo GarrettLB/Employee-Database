@@ -26,7 +26,7 @@ such as salary, department, and who they work under.
 * create a .env file and provide DB_USER and DB_PASS keys, OR change lines 9 and 10 in index.js to your user and password values.
 * Lastly, run "npm start" in your terminal to start the program.
 
-If you'd like to see a walk-through video on how to use this program, click here: 
+If you'd like to see a walk-through video on how to use this program, click here: https://drive.google.com/file/d/1fPltt_VG7BmpXNyOkkMrw1mMJADCugEi/view?usp=sharing
 
 Screenshot:  
 <img src="./assets/images/Screenshot.png">
