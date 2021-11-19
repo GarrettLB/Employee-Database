@@ -4,7 +4,7 @@
 Employee Database provides a simple easy solution to anyone in need of a way to keep track of their employees' information, 
 such as salary, department, and who they work under.
 
-## Key Features
+### Key Features
 * Allows the ability to add new departments, roles, and employees. 
 * All departments, roles, and employees can be viewed seperately by tables. 
 * Allows the role of an employee to be updated after it has been created.
@@ -13,7 +13,7 @@ such as salary, department, and who they work under.
 # Technologies
 * Node.js
 
-## Npm packages used:
+### Npm packages used:
 * console.table
 * inquirer
 * dotenv
