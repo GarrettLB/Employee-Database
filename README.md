@@ -28,7 +28,5 @@ such as salary, department, and who they work under.
 
 If you'd like to see a walk-through video on how to use this program, click here: 
 
-Screenshot:
-
-<img scr="./assets/images/Screenshot.png">  
+Screenshot:  
 <img src="./assets/images/Screenshot.png">
